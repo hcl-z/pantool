@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="file" name="" id="filelist">
+    <script>
+        let file=document.getElementById('filelist')
+        file.onchange=function(){
+        let data=new FormData()
+        data.append('file',file.files[0])
+        let xhr=new XMLHttpRequest()
+        xhr.open('post','http://localhost:3000/file',false)
+        xhr.send(data)
+        if(xhr.status>=200&&xhr.status<300||xhr.status==304)
+        {
+            alert('success');
+        }
+        else
+        {
+            alert('error'+xhr.statusText)
+        }
+        }
+        
+    </script>
+</body>
+</html>
