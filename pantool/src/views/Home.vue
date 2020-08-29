@@ -1,18 +1,39 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <input type="file" @change='choose($event)'>
+    <button @click='upload'>submit</button>
+    <a href="http://localhost:3000/file/download">download</a>
+    <QrcodeVue :value="value" :size='200' level='H' background='#ff0' foreground='#ff00ff' ></QrcodeVue>'
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import QrcodeVue from 'qrcode.vue'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      file:'',
+      value:'http://localhost:3000'
+    }
+  },
+  components:{QrcodeVue},
+  methods: {
+    choose(e){
+      this.file=e.target.files[0];
+    },
+    upload(){
+      let formdata=new FormData()
+      formdata.append('file',this.file)
+      console.log(formdata)
+      this.$http.post('/file/upload',formdata).then(res=>{
+        console.log(res)
+      })
+    },
+    
+  },
 }
 </script>
+
+<style lang="less">
+  
+</style>

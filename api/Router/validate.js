@@ -1,6 +1,6 @@
 const express=require('express')
 var User=require('../db/models/User')
-var hashkey=require('../config').hashkey
+var salt=require('../config').salt
 const crypto = require('crypto');
 var router=express.Router()
 
@@ -8,7 +8,7 @@ router.post('/login',async(req,res)=>{
     console.log(req.session.info)
     let {name,pass}=req.body
     let hash = crypto.createHash('sha1');
-    hash.update(pass)
+    hash.update(pass+salt)
     pass=hash.digest('hex')
     try {
         var Userfind=await User.findOne({name:name,password:pass})
@@ -30,7 +30,7 @@ router.get('/',(req,res)=>{
 router.post('/register',async(req,res)=>{
     let {name,pass,email}=req.body
     let hash = crypto.createHash('sha1');
-    hash.update(pass)
+    hash.update(pass+salt)
     pass=hash.digest('hex')
     try {
         var Userfind=await User.findOne({name:name})
