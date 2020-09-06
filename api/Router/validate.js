@@ -5,7 +5,6 @@ const crypto = require('crypto');
 var router=express.Router()
 
 router.post('/login',async(req,res)=>{
-    console.log(req.session.info)
     let {name,pass}=req.body
     let hash = crypto.createHash('sha1');
     hash.update(pass+salt)
@@ -24,9 +23,7 @@ router.post('/login',async(req,res)=>{
     } 
     return res.send({code:0,message:'用户名或密码错误'})
 })
-router.get('/',(req,res)=>{
-    res.send(req.session.info)
-})
+
 router.post('/register',async(req,res)=>{
     let {name,pass,email}=req.body
     let hash = crypto.createHash('sha1');

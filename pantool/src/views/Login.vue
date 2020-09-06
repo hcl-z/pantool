@@ -35,7 +35,10 @@ export default {
       this.activeIndex = i;
     },
     doLogin(x){
-      console.log(x)
+      this.$http.post('/validate/login',x)
+      .then(res=>{
+        if(res.data.code==1) this.$router.push('/home')
+      })
     },
     doRegister(x){
       console.log(x)

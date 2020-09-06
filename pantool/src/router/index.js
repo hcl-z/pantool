@@ -26,6 +26,8 @@ Vue.use(VueRouter)
   }
 ]
 
+//router.beforeEach
+
 const router = new VueRouter({
   routes
 })
